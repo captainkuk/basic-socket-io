@@ -8,14 +8,23 @@ app.get('/',function(req,res){
 
 users = [];
 io.on('connection',function(socket){
+    
     console.log('Connected');
+    
     socket.on('setUsername',function(data){
+
+        console.log(data);
+        //ค้นหา user ใน array users ถ้าเจอจะ return เป็นค่า index
         if(users.indexOf(data)>-1){
-            users.push(data);
-            socket.emit(userSet,{username:data});
+            socket.emit('userExists',data+' มีผู้ใช้ชื่อนี้แล้ว กรุณาใช้ชื่ออื่น');
         }else{
-            socket.eimit('userExists',data+' มีผู้ใช้ชื่อนี้แล้ว กรุณาใช้ชื่ออื่น');
+            users.push(data);
+            socket.emit('userSet',{username:data});
         }
+    });
+    
+    socket.on('msg',function(data){
+        io.sockets.emit('newmsg',data);
     });
 });
 
