@@ -10,7 +10,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" charset="utf-8"></script>
     <script type="text/javascript">
         var socket=io();
+
+        socket.on('broadcast',function(data){
+            document.body.innerHTML = '';
+            document.write(data.message);
+        });
     </script>
+
+    <div id="error-container"></div>
+
+    <input type="text" id="name" text="name" value="" placeholder="กรุณาตั้งชื่อของคุณ">
+    <button type="button" name="button" onclick="setUsername()">เริ่มแชท</button>
 
     <h1> Hello World</h1>
 
